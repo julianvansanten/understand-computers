@@ -1,0 +1,136 @@
+/*
+ * Light theme: a squared notebook (ruitjespapier) and a blue pen.
+ * Dark theme: a chalkboard. Components only use these names, never literal colors.
+ */
+:root {
+	color-scheme: light;
+	--desk: #e8edf7;
+	--paper: #ffffff;
+	--ink: #16224f;
+	--ink-soft: #4a5680;
+	--grid: #dbe4f4;
+	--margin-line: #f0a3ab;
+	--line: #aab7d6;
+	--line-strong: #6b7aa6;
+	--pen: #1d3fbb;
+	--on-pen: #ffffff;
+
+	--idle: #c9d3ea;
+	--idle-edge: #55628c;
+	--idle-text: #16224f;
+	--candidate: #ffe08a;
+	--candidate-edge: #866000;
+	--candidate-text: #16224f;
+	--active: #ffa35c;
+	--active-edge: #963d00;
+	--active-text: #16224f;
+	--done: #86d8a8;
+	--done-edge: #0d6b3c;
+	--done-text: #16224f;
+	--failed: #ff9aa1;
+	--failed-edge: #a5121f;
+	--failed-text: #16224f;
+
+	--accent-blue: #1d3fbb;
+	--accent-green: #0d6b3c;
+	--accent-purple: #6a2fa0;
+	--accent-orange: #963d00;
+
+	--font: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', 'Noto Sans', sans-serif;
+	--font-code: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, Consolas, monospace;
+	--text-s: 0.875rem;
+	--text-m: 1rem;
+	--text-l: 1.25rem;
+	--text-xl: 1.75rem;
+	--text-xxl: clamp(2.25rem, 5vw, 3.75rem);
+
+	--space-1: 0.25rem;
+	--space-2: 0.5rem;
+	--space-3: 0.75rem;
+	--space-4: 1rem;
+	--space-6: 1.5rem;
+	--space-8: 2rem;
+	--space-12: 3rem;
+
+	--radius: 4px;
+	--target: 2.5rem;
+	--page: 84rem;
+}
+
+:root[data-theme='dark'] {
+	color-scheme: dark;
+	--desk: #10241f;
+	--paper: #18342c;
+	--ink: #f2f5ec;
+	--ink-soft: #b9cabf;
+	--grid: #21433a;
+	--margin-line: #8a5a56;
+	--line: #4f7366;
+	--line-strong: #8fb0a2;
+	--pen: #ffe27a;
+	--on-pen: #10241f;
+
+	--idle: #3b5f54;
+	--idle-edge: #b9cabf;
+	--idle-text: #f2f5ec;
+	--candidate: #f3d774;
+	--candidate-edge: #fff3c4;
+	--candidate-text: #10241f;
+	--active: #ffab66;
+	--active-edge: #ffe0c4;
+	--active-text: #10241f;
+	--done: #8fdcae;
+	--done-edge: #d9f7e4;
+	--done-text: #10241f;
+	--failed: #ff9ea3;
+	--failed-edge: #ffdcde;
+	--failed-text: #10241f;
+
+	--accent-blue: #9fc0ff;
+	--accent-green: #8fdcae;
+	--accent-purple: #d9b3ff;
+	--accent-orange: #ffab66;
+}
+
+@media (prefers-color-scheme: dark) {
+	:root:not([data-theme]) {
+		color-scheme: dark;
+		--desk: #10241f;
+		--paper: #18342c;
+		--ink: #f2f5ec;
+		--ink-soft: #b9cabf;
+		--grid: #21433a;
+		--margin-line: #8a5a56;
+		--line: #4f7366;
+		--line-strong: #8fb0a2;
+		--pen: #ffe27a;
+		--on-pen: #10241f;
+
+		--idle: #3b5f54;
+		--idle-edge: #b9cabf;
+		--idle-text: #f2f5ec;
+		--candidate: #f3d774;
+		--candidate-edge: #fff3c4;
+		--candidate-text: #10241f;
+		--active: #ffab66;
+		--active-edge: #ffe0c4;
+		--active-text: #10241f;
+		--done: #8fdcae;
+		--done-edge: #d9f7e4;
+		--done-text: #10241f;
+		--failed: #ff9ea3;
+		--failed-edge: #ffdcde;
+		--failed-text: #10241f;
+
+		--accent-blue: #9fc0ff;
+		--accent-green: #8fdcae;
+		--accent-purple: #d9b3ff;
+		--accent-orange: #ffab66;
+	}
+}
+
+/* Digiboard: everything sized in rem grows along. */
+:root[data-present] {
+	font-size: 140%;
+	--target: 3rem;
+}

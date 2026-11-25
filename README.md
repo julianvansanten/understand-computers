@@ -3,6 +3,8 @@
 Interactive computer science visualizations for secondary school, in Dutch and English.
 A static site built with SvelteKit 3 and TypeScript.
 
+Warning: this project is vibe-coded using Claude Code. Use at your own discretion!
+
 ## Start
 
 Needs Node 24 or newer (26 is used in CI).

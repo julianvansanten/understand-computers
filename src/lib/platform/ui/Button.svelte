@@ -22,6 +22,7 @@
 		border: 1.5px solid var(--line-strong);
 		border-radius: var(--radius);
 		background: var(--paper);
+		color: var(--ink);
 		cursor: pointer;
 	}
 	button:hover:not(:disabled) {
@@ -33,7 +34,7 @@
 	}
 	.primary {
 		border-color: var(--pen);
-		background: var(--pen);
-		color: var(--on-pen);
+		background: var(--main);
+		color: var(--on-main);
 	}
 </style>

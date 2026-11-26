@@ -9,14 +9,14 @@ export default defineConfig({
 	forbidOnly: !!process.env.CI,
 	reporter: 'list',
 	use: {
-		baseURL: `http://localhost:4174${base}/`,
+		baseURL: `http://127.0.0.1:4174${base}/`,
 		viewport: { width: 1366, height: 768 },
 		trace: 'retain-on-failure',
 		launchOptions: { executablePath: process.env.CHROMIUM_PATH }
 	},
 	webServer: {
-		command: 'npx vite preview --port 4174 --strictPort',
-		url: `http://localhost:4174${base}/`,
+		command: 'node scripts/serve-build.mjs 4174',
+		url: `http://127.0.0.1:4174${base}/`,
 		reuseExistingServer: false
 	}
 });

@@ -1,0 +1,20 @@
+# Copy to compose.yaml, then: docker compose up --detach --build
+services:
+  web:
+    build: .
+    image: understand-computers
+    restart: unless-stopped
+    ports:
+      - '8080:8080'
+    environment:
+      # Taken from .env or the shell. You can also write a color here; keep the quotes, because
+      # YAML sees an unquoted # as a comment. Empty means the standard colors.
+      THEME_COLOR_LIGHT: '${THEME_COLOR_LIGHT:-}'
+      THEME_COLOR_DARK: '${THEME_COLOR_DARK:-}'
+    read_only: true
+    tmpfs:
+      - /tmp
+    cap_drop:
+      - ALL
+    security_opt:
+      - no-new-privileges:true

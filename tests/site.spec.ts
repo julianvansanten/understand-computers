@@ -25,7 +25,7 @@ const seek = (page: Page, value: number) =>
 test.beforeEach(async ({ page }) => {
 	// Anything going wrong in the console or leaving the site fails the test.
 	page.on('pageerror', (error) => expect(error.message).toBe(''));
-	page.on('request', (request) => expect(new URL(request.url()).hostname).toBe('localhost'));
+	page.on('request', (request) => expect(new URL(request.url()).hostname).toBe('127.0.0.1'));
 });
 
 test('from welcome page to a visualization', async ({ page }) => {

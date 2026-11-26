@@ -1,23 +1,27 @@
 /*
  * Light theme: a squared notebook (ruitjespapier) and a blue pen.
  * Dark theme: a chalkboard. Components only use these names, never literal colors.
+ * --school-… comes from school-theme.css and replaces the standard color when a school sets its own.
  */
 :root {
 	color-scheme: light;
-	--desk: #e8edf7;
+	--desk: var(--school-light-desk, #e8edf7);
 	--paper: #ffffff;
-	--ink: #16224f;
-	--ink-soft: #4a5680;
-	--grid: #dbe4f4;
+	--ink: var(--school-light-ink, #16224f);
+	--ink-soft: var(--school-light-ink-soft, #4a5680);
+	--grid: var(--school-light-grid, #dbe4f4);
 	--margin-line: #f0a3ab;
-	--line: #aab7d6;
-	--line-strong: #6b7aa6;
-	--pen: #1d3fbb;
-	--on-pen: #ffffff;
+	--line: var(--school-light-line, #aab7d6);
+	--line-strong: var(--school-light-line-strong, #6b7aa6);
+	--pen: var(--school-light-pen, #1d3fbb);
+	--main: var(--school-light-main, #1d3fbb);
+	--on-main: var(--school-light-on-main, #ffffff);
+	--header: var(--school-light-main, #ffffff);
+	--on-header: var(--school-light-on-main, #16224f);
 
-	--idle: #c9d3ea;
-	--idle-edge: #55628c;
-	--idle-text: #16224f;
+	--idle: var(--school-light-idle, #c9d3ea);
+	--idle-edge: var(--school-light-ink-soft, #55628c);
+	--idle-text: var(--school-light-ink, #16224f);
 	--candidate: #ffe08a;
 	--candidate-edge: #866000;
 	--candidate-text: #16224f;
@@ -59,20 +63,23 @@
 
 :root[data-theme='dark'] {
 	color-scheme: dark;
-	--desk: #10241f;
-	--paper: #18342c;
-	--ink: #f2f5ec;
-	--ink-soft: #b9cabf;
-	--grid: #21433a;
+	--desk: var(--school-dark-desk, #10241f);
+	--paper: var(--school-dark-paper, #18342c);
+	--ink: var(--school-dark-ink, #f2f5ec);
+	--ink-soft: var(--school-dark-ink-soft, #b9cabf);
+	--grid: var(--school-dark-grid, #21433a);
 	--margin-line: #8a5a56;
-	--line: #4f7366;
-	--line-strong: #8fb0a2;
-	--pen: #ffe27a;
-	--on-pen: #10241f;
+	--line: var(--school-dark-line, #4f7366);
+	--line-strong: var(--school-dark-line-strong, #8fb0a2);
+	--pen: var(--school-dark-pen, #ffe27a);
+	--main: var(--school-dark-main, #ffe27a);
+	--on-main: var(--school-dark-on-main, #10241f);
+	--header: var(--school-dark-main, #18342c);
+	--on-header: var(--school-dark-on-main, #f2f5ec);
 
-	--idle: #3b5f54;
-	--idle-edge: #b9cabf;
-	--idle-text: #f2f5ec;
+	--idle: var(--school-dark-idle, #3b5f54);
+	--idle-edge: var(--school-dark-ink-soft, #b9cabf);
+	--idle-text: var(--school-dark-ink, #f2f5ec);
 	--candidate: #f3d774;
 	--candidate-edge: #fff3c4;
 	--candidate-text: #10241f;
@@ -95,20 +102,23 @@
 @media (prefers-color-scheme: dark) {
 	:root:not([data-theme]) {
 		color-scheme: dark;
-		--desk: #10241f;
-		--paper: #18342c;
-		--ink: #f2f5ec;
-		--ink-soft: #b9cabf;
-		--grid: #21433a;
+		--desk: var(--school-dark-desk, #10241f);
+		--paper: var(--school-dark-paper, #18342c);
+		--ink: var(--school-dark-ink, #f2f5ec);
+		--ink-soft: var(--school-dark-ink-soft, #b9cabf);
+		--grid: var(--school-dark-grid, #21433a);
 		--margin-line: #8a5a56;
-		--line: #4f7366;
-		--line-strong: #8fb0a2;
-		--pen: #ffe27a;
-		--on-pen: #10241f;
+		--line: var(--school-dark-line, #4f7366);
+		--line-strong: var(--school-dark-line-strong, #8fb0a2);
+		--pen: var(--school-dark-pen, #ffe27a);
+		--main: var(--school-dark-main, #ffe27a);
+		--on-main: var(--school-dark-on-main, #10241f);
+		--header: var(--school-dark-main, #18342c);
+		--on-header: var(--school-dark-on-main, #f2f5ec);
 
-		--idle: #3b5f54;
-		--idle-edge: #b9cabf;
-		--idle-text: #f2f5ec;
+		--idle: var(--school-dark-idle, #3b5f54);
+		--idle-edge: var(--school-dark-ink-soft, #b9cabf);
+		--idle-text: var(--school-dark-ink, #f2f5ec);
 		--candidate: #f3d774;
 		--candidate-edge: #fff3c4;
 		--candidate-text: #10241f;

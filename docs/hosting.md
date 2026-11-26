@@ -16,6 +16,36 @@ has been deployed yet.
 Advice: use GitHub Pages or Cloudflare Pages for a pilot, and your own server once there is a
 backend with student data. Ask your school's privacy officer before using a provider in class.
 
+## School colors
+
+| Variable            | Main color of                                  |
+| ------------------- | ---------------------------------------------- |
+| `THEME_COLOR_LIGHT` | The light theme, a hex color such as `#b3131b` |
+| `THEME_COLOR_DARK`  | The dark theme                                 |
+
+Both are optional and separate. Use three or six hex digits; the `#` may be left out. Keep quotes around
+the value in `.env` and YAML files, because `#` can start a comment there. An invalid value is reported
+and ignored.
+
+- **Docker:** read when the container starts. After a change: `docker compose up --detach`.
+- **Elsewhere:** read by `npm run dev` and `npm run build`, from the environment or `.env`. To change a
+  site that is already built, run `node scripts/theme.mjs build/theme.css` with the variables set and
+  upload that file.
+- **GitHub Pages:** repository variables with these names. **Cloudflare Pages:** build variables.
+
+## Docker
+
+```sh
+cp compose.example.yaml compose.yaml
+cp .env.example .env    # optional, for the school colors
+docker compose up --detach --build
+```
+
+The site is on port 8080. The container runs nginx without root, on a read-only file system. It serves
+plain HTTP, so put a reverse proxy with HTTPS in front of it. Copying a link needs HTTPS (or localhost).
+The site must be at the root of its domain. A backend can later become a second service in the same
+compose file.
+
 ## Own server / VPS
 
 1. `npm ci && npm run build`

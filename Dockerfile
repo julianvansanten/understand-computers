@@ -1,0 +1,14 @@
+FROM node:26-alpine AS build
+WORKDIR /app
+COPY package.json package-lock.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+
+# Runs without root. The theme is set when it starts, so one image serves every school.
+FROM nginxinc/nginx-unprivileged:stable-alpine
+COPY docker/nginx.conf /etc/nginx/conf.d/default.conf
+COPY --chmod=755 docker/40-theme.sh /docker-entrypoint.d/40-theme.sh
+COPY --from=build /app/build /usr/share/nginx/html
+EXPOSE 8080
+HEALTHCHECK --interval=30s --timeout=3s CMD wget -q -O /dev/null http://127.0.0.1:8080/ || exit 1

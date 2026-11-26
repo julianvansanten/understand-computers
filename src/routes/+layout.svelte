@@ -1,4 +1,5 @@
 <script lang="ts">
+	import '#lib/platform/design/school-theme.css';
 	import '#lib/platform/design/tokens.css';
 	import '#lib/platform/design/base.css';
 	import type { Snippet } from 'svelte';
@@ -80,7 +81,8 @@
 		align-items: center;
 		gap: var(--space-2) var(--space-6);
 		padding: var(--space-2) var(--space-6);
-		background: var(--paper);
+		background: var(--header);
+		color: var(--on-header);
 		border-bottom: 1.5px solid var(--line);
 	}
 	nav,
@@ -94,8 +96,11 @@
 		display: inline-flex;
 		align-items: center;
 		min-height: var(--target);
-		color: var(--ink);
+		color: inherit;
 		text-decoration: none;
+	}
+	header :global(:focus-visible) {
+		outline-color: var(--on-header);
 	}
 	nav a:hover {
 		text-decoration: underline;

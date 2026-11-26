@@ -4,6 +4,19 @@ Light is a squared notebook with a blue pen; dark is a chalkboard. All values ar
 `src/lib/platform/design/tokens.css`. Every visualization uses the same shell, so an author never
 places controls, legends or explanations.
 
+## School colors
+
+A school can replace the main color of each theme ([how](hosting.md#school-colors)). `school-theme.css`
+derives the other tokens from it and keeps text readable for any color, by fixing luminance. A test
+checks this for 125 colors.
+
+- `--main`, with `--on-main` for text on it, is the school's exact color. Use it for large areas.
+- `--pen` is that color, darkened or lightened until it is readable as text or a thin line.
+- Subject accents and states never change, so they mean the same at every school.
+
+Browsers without relative colors (Chrome before 119, Firefox before 128, Safari before 18) show the
+standard colors.
+
 ## States
 
 A state has the same meaning, color and shape everywhere.

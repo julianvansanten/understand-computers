@@ -29,6 +29,9 @@ jobs:
       - run: npm run build
         env:
           BASE_PATH: ${{ steps.pages.outputs.base_path }}
+          # Settings > Secrets and variables > Actions > Variables; empty means the standard colors.
+          THEME_COLOR_LIGHT: ${{ vars.THEME_COLOR_LIGHT }}
+          THEME_COLOR_DARK: ${{ vars.THEME_COLOR_DARK }}
       - run: npm run test:build
       - uses: actions/upload-pages-artifact@v5
         with:

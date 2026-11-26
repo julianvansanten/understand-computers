@@ -49,8 +49,9 @@
 	.cta {
 		padding: var(--space-3) var(--space-6);
 		border-radius: var(--radius);
-		background: var(--pen);
-		color: var(--on-pen);
+		border: 1.5px solid var(--pen);
+		background: var(--main);
+		color: var(--on-main);
 		font-size: var(--text-l);
 		text-decoration: none;
 	}

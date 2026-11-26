@@ -1,0 +1,82 @@
+/*
+ * Derives a palette from a school's own colors. theme.css (written by scripts/theme.mjs, or by
+ * docker/40-theme.sh in a container) sets --theme-light and/or --theme-dark.
+ *
+ * A custom property that uses an unset one is itself unset, so without a school color every
+ * var(--school-…, fallback) in tokens.css uses its fallback. The same goes for browsers that do not
+ * support relative colors.
+ *
+ * In XYZ, y is the luminance that WCAG contrast is defined on. Scaling x, y and z together darkens a
+ * color to an exact luminance; moving them towards white lightens it. That guarantees contrast for any
+ * school color: text is at most 0.13 on light surfaces, and at least 0.36 on dark ones.
+ */
+@supports (color: color(from red xyz-d65 x y z)) {
+	:root {
+		--school-light-main: var(--theme-light);
+		/* Black or white, whichever contrasts most: the two are equal at luminance 0.179. */
+		--school-light-on-main: color(
+			from var(--theme-light) xyz-d65 calc(0.9505 * clamp(0, (0.179 - y) * 100000, 1))
+				clamp(0, (0.179 - y) * 100000, 1) calc(1.089 * clamp(0, (0.179 - y) * 100000, 1))
+		);
+		--school-light-pen: color(
+			from var(--theme-light) xyz-d65 calc(x * min(1, 0.13 / max(y, 0.0001)))
+				calc(y * min(1, 0.13 / max(y, 0.0001))) calc(z * min(1, 0.13 / max(y, 0.0001)))
+		);
+		--school-light-ink: color(
+			from var(--theme-light) xyz-d65 calc(x * min(1, 0.02 / max(y, 0.0001)))
+				calc(y * min(1, 0.02 / max(y, 0.0001))) calc(z * min(1, 0.02 / max(y, 0.0001)))
+		);
+		--school-light-ink-soft: color-mix(in xyz-d65, var(--school-light-ink) 45%, dimgray);
+		--school-light-desk: color-mix(in srgb, var(--theme-light) 9%, white);
+		--school-light-grid: color-mix(in srgb, var(--theme-light) 14%, white);
+		--school-light-line: color-mix(in srgb, var(--theme-light) 35%, white);
+		--school-light-line-strong: color-mix(in xyz-d65, var(--school-light-pen) 45%, gray);
+		/* Mostly gray, so that it is not mistaken for a state with a color of its own. */
+		--school-light-idle: color-mix(
+			in srgb,
+			color-mix(in srgb, var(--theme-light), gray) 28%,
+			white
+		);
+
+		--school-dark-main: var(--theme-dark);
+		--school-dark-on-main: color(
+			from var(--theme-dark) xyz-d65 calc(0.9505 * clamp(0, (0.179 - y) * 100000, 1))
+				clamp(0, (0.179 - y) * 100000, 1) calc(1.089 * clamp(0, (0.179 - y) * 100000, 1))
+		);
+		--school-dark-pen: color(
+			from var(--theme-dark) xyz-d65
+				calc(x + (0.9505 - x) * max(0, (0.36 - y) / max(1 - y, 0.0001)))
+				calc(y + (1 - y) * max(0, (0.36 - y) / max(1 - y, 0.0001)))
+				calc(z + (1.089 - z) * max(0, (0.36 - y) / max(1 - y, 0.0001)))
+		);
+		/* Surfaces: the school's hue, half mixed with a gray of the same luminance. */
+		--school-dark-desk: color-mix(
+			in xyz-d65,
+			color(from var(--school-dark-pen) xyz-d65 calc(x * 0.012 / y) 0.012 calc(z * 0.012 / y)),
+			color(xyz-d65 0.0114 0.012 0.0131)
+		);
+		--school-dark-paper: color-mix(
+			in xyz-d65,
+			color(from var(--school-dark-pen) xyz-d65 calc(x * 0.028 / y) 0.028 calc(z * 0.028 / y)),
+			color(xyz-d65 0.0266 0.028 0.0305)
+		);
+		--school-dark-grid: color-mix(
+			in xyz-d65,
+			color(from var(--school-dark-pen) xyz-d65 calc(x * 0.045 / y) 0.045 calc(z * 0.045 / y)),
+			color(xyz-d65 0.0428 0.045 0.049)
+		);
+		--school-dark-line: color-mix(
+			in xyz-d65,
+			color(from var(--school-dark-pen) xyz-d65 calc(x * 0.14 / y) 0.14 calc(z * 0.14 / y)),
+			color(xyz-d65 0.1331 0.14 0.1525)
+		);
+		--school-dark-idle: color-mix(
+			in xyz-d65,
+			color(from var(--school-dark-pen) xyz-d65 calc(x * 0.09 / y) 0.09 calc(z * 0.09 / y)),
+			color(xyz-d65 0.0855 0.09 0.098)
+		);
+		--school-dark-line-strong: color-mix(in xyz-d65, var(--school-dark-pen) 60%, darkgray);
+		--school-dark-ink-soft: color-mix(in xyz-d65, var(--school-dark-pen) 35%, lightgray);
+		--school-dark-ink: color-mix(in xyz-d65, var(--school-dark-pen) 10%, white);
+	}
+}

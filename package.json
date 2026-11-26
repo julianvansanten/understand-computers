@@ -11,9 +11,12 @@
 		"#lib/*": "./src/lib/*"
 	},
 	"scripts": {
+		"theme": "node --env-file-if-exists=.env scripts/theme.mjs static/theme.css",
+		"predev": "npm run theme",
 		"dev": "vite dev",
+		"prebuild": "npm run theme",
 		"build": "vite build",
-		"preview": "vite preview",
+		"preview": "node scripts/serve-build.mjs",
 		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
 		"lint": "prettier --check . && eslint . && node scripts/verify-source.mjs",
 		"format": "prettier --write .",

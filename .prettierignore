@@ -5,3 +5,5 @@ package-lock.json
 test-results
 playwright-report
 static/theme.css
+# Copied skills, kept identical to their source
+.claude/skills

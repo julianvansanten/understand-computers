@@ -52,7 +52,12 @@
 		/>
 		<StateGlyph state={bar.state} x={bar.x + slot / 2} y={top - 12} size={roomy ? 1.6 : 0.9} />
 		{#if roomy}
-			<text x={bar.x + slot / 2} y={BASE - 12} font-size="16" style="fill: var(--{bar.state}-text)">
+			<text
+				x={bar.x + slot / 2}
+				y={BASE - 12}
+				style:font-size="calc(16px * var(--stage-text))"
+				style="fill: var(--{bar.state}-text)"
+			>
 				{bar.value}
 			</text>
 		{/if}

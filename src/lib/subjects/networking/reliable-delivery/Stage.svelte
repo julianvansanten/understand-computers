@@ -40,8 +40,9 @@
 			})
 	);
 
-	const box = $derived(Math.min(34, 840 / s.total));
-	const boxX = (number: number) => 90 + number * box;
+	// Anchored right: the legend button covers the top-left corner, most of all on a phone.
+	const box = $derived(Math.min(34, 600 / s.total));
+	const boxX = (number: number) => 940 - (s.total - number) * box;
 	const numbers = $derived(Array.from({ length: s.total }, (_, i) => i));
 	const senderState = (number: number): StateName =>
 		number < s.base ? 'done' : number < s.highest ? 'candidate' : 'idle';
@@ -51,10 +52,18 @@
 </script>
 
 {#snippet row(top: number, label: string, state: (number: number) => StateName)}
-	<text x="50" y={top + 15} font-size="15" style="text-anchor: start" class="label">{label}</text>
+	<text
+		x={boxX(0) - 10}
+		y={top + 15}
+		style:font-size="calc(15px * var(--stage-text))"
+		style="text-anchor: end"
+		class="label"
+	>
+		{label}
+	</text>
 	{#each numbers as number (number)}
 		<rect
-			x={boxX(number) + 46}
+			x={boxX(number) + 2}
 			y={top}
 			width={box - 4}
 			height="30"
@@ -62,9 +71,9 @@
 			stroke-width="1.5"
 		/>
 		<text
-			x={boxX(number) + 46 + (box - 4) / 2}
+			x={boxX(number) + box / 2}
 			y={top + 15}
-			font-size="14"
+			style:font-size="calc(14px * var(--stage-text))"
 			style="fill: var(--{state(number)}-text)"
 		>
 			{number}
@@ -91,7 +100,12 @@
 				label={message.kind === 'ack' ? `A${message.number}` : String(message.number)}
 			/>
 		{:else}
-			<text class="label" x={end.x + (message.kind === 'ack' ? -26 : 26)} y={end.y} font-size="14">
+			<text
+				class="label"
+				x={end.x + (message.kind === 'ack' ? -26 : 26)}
+				y={end.y}
+				style:font-size="calc(14px * var(--stage-text))"
+			>
 				{message.kind === 'ack' ? `A${message.number}` : message.number}
 			</text>
 		{/if}
@@ -100,17 +114,23 @@
 	<rect class="header" x="-960" y="-100" width="2880" height={TOP + 78} />
 	{@render row(8, t('row.sender'), senderState)}
 	{@render row(54, t('row.receiver'), receiverState)}
-	<path
-		class="window"
-		d="M{boxX(s.base) + 44} 5V42H{boxX(Math.min(s.base + s.window, s.total)) + 44}V5"
-	/>
+	<path class="window" d="M{boxX(s.base)} 5V42H{boxX(Math.min(s.base + s.window, s.total))}V5" />
 	<line class="side" x1={SENDER} y1={TOP - 22} x2={SENDER} y2={BOTTOM} />
 	<line class="side" x1={RECEIVER} y1={TOP - 22} x2={RECEIVER} y2={BOTTOM} />
 	<line class="now" x1={SENDER - 30} y1={y(time)} x2={RECEIVER + 30} y2={y(time)} />
-	<text class="label" x={SENDER - 120} y={TOP} font-size="16">{t('row.sender')}</text>
-	<text class="label" x={RECEIVER + 100} y={TOP} font-size="16">{t('row.receiver')}</text>
+	<text class="label" x={SENDER - 120} y={TOP} style:font-size="calc(16px * var(--stage-text))">
+		{t('row.sender')}
+	</text>
+	<text class="label" x={RECEIVER + 100} y={TOP} style:font-size="calc(16px * var(--stage-text))">
+		{t('row.receiver')}
+	</text>
 	{#if waiting > 0}
-		<text class="label" x={SENDER - 130} y={y(time)} font-size="16">
+		<text
+			class="label"
+			x={SENDER - 130}
+			y={y(time)}
+			style:font-size="calc(16px * var(--stage-text))"
+		>
 			{t('timer', { left: Math.round(waiting) })}
 		</text>
 	{/if}

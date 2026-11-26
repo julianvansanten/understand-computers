@@ -137,10 +137,48 @@ test('presentation mode on a digiboard', async ({ page }) => {
 		expect(Math.min(box.width, box.height)).toBeGreaterThanOrEqual(48);
 		expect(box.y + box.height).toBeLessThanOrEqual(1080);
 	}
+	await expect(page.getByRole('region', { name: 'Pseudocode' })).toHaveCount(0);
 	await page.getByRole('button', { name: 'Toon zijpaneel' }).click();
+	// Presenting keeps the pseudocode in the side panel, below the settings.
+	const settings = (await page.locator('aside').getByLabel('Algoritme').boundingBox())!;
+	const code = (await page
+		.locator('aside')
+		.getByRole('region', { name: 'Pseudocode' })
+		.boundingBox())!;
+	expect(code.y).toBeGreaterThan(settings.y);
 	await expect(page.getByLabel('Algoritme')).toBeVisible();
 	await page.getByRole('button', { name: 'Stop presenteren' }).click();
 	await expect(page.locator('html')).not.toHaveAttribute('data-present');
+});
+
+test('the pseudocode is below the controls, which stay in place', async ({ page }) => {
+	await open(page, 'subjects/algorithms/sorting/');
+	const controls = (await page.locator('.controls').boundingBox())!;
+	expect(controls.y + controls.height).toBeLessThanOrEqual(768);
+	const code = page.locator('.main').getByRole('region', { name: 'Pseudocode' });
+	expect((await code.boundingBox())!.y).toBeGreaterThan(controls.y + controls.height);
+	await code.scrollIntoViewIfNeeded();
+	await expect(code).toBeInViewport();
+});
+
+test('the legend opens from the corner of the drawing, in both modes', async ({ page }) => {
+	await open(page, 'subjects/networking/packet-routing/');
+	const legend = page.locator('.stage').getByText('Legenda');
+	const item = page.getByText('Pakket onderweg');
+	await expect(item).toBeHidden();
+	const stage = (await page.locator('.main svg[role="group"]').boundingBox())!;
+	const button = (await legend.boundingBox())!;
+	expect(button.x - stage.x).toBeLessThan(20);
+	expect(button.y - stage.y).toBeLessThan(20);
+	await legend.click();
+	await expect(item).toBeVisible();
+	await page.keyboard.press('Escape');
+	await expect(item).toBeHidden();
+	await expect(legend).toBeFocused();
+
+	await page.getByRole('button', { name: 'Presenteren', exact: true }).click();
+	await legend.click();
+	await expect(item).toBeVisible();
 });
 
 test('unknown pages explain themselves in the right language', async ({ page }) => {

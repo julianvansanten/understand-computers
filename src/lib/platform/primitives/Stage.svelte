@@ -38,6 +38,16 @@
 		border-radius: var(--radius);
 		font-family: var(--font);
 		touch-action: manipulation;
+		/* Every text in a drawing is its base size times this. */
+		--stage-text: 1.15;
+	}
+	/* On a phone the drawing is shown at about a third of its size; its text must grow more. */
+	@media (max-width: 40rem) {
+		svg {
+			--stage-text: 1.5;
+			border-inline: 0;
+			border-radius: 0;
+		}
 	}
 	pattern path {
 		fill: none;

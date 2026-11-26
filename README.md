@@ -35,16 +35,16 @@ A color that is not set keeps the standard look. See [Hosting](docs/hosting.md#s
 
 ## Commands
 
-| Command              | Does                                                                                                                |
-| -------------------- | ------------------------------------------------------------------------------------------------------------------- |
-| `npm run dev`        | Development server                                                                                                  |
-| `npm run build`      | Static site in `build/`                                                                                             |
-| `npm run preview`    | Serves `build/` like a static host                                                                                  |
-| `npm run check`      | Type check                                                                                                          |
-| `npm run lint`       | Formatting, ESLint and project rules                                                                                |
-| `npm test`           | Models, engine and translations                                                                                     |
-| `npm run test:build` | Every page exists in every language                                                                                 |
-| `npm run test:e2e`   | Browser tests on `build/`. First `npx playwright install chromium`, or set `CHROMIUM_PATH` to an installed Chromium |
+| Command              | Does                                                              |
+| -------------------- | ----------------------------------------------------------------- |
+| `npm run dev`        | Development server                                                |
+| `npm run build`      | Static site in `build/`                                           |
+| `npm run preview`    | Serves `build/` like a static host                                |
+| `npm run check`      | Type check                                                        |
+| `npm run lint`       | Formatting, ESLint and project rules                              |
+| `npm test`           | Models, engine and translations                                   |
+| `npm run test:build` | Every page exists in every language                               |
+| `npm run test:e2e`   | Browser tests on `build/`; downloads their browser the first time |
 
 ## Documentation
 

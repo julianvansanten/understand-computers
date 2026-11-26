@@ -79,8 +79,12 @@
 		white-space: nowrap;
 	}
 	@media (max-width: 45rem) {
+		/* Hidden but still read aloud. Clipping alone keeps its width, which can widen the page. */
 		thead {
 			position: absolute;
+			width: 1px;
+			height: 1px;
+			overflow: hidden;
 			clip-path: inset(50%);
 		}
 		tbody tr,

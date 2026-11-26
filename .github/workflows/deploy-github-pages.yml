@@ -1,8 +1,11 @@
 name: Deploy to GitHub Pages
 
-# Started by hand. To publish on every push, add:  push: { branches: [main] }
+# Publishes main, but only after every CI check passed for that commit.
 on:
-  workflow_dispatch:
+  workflow_run:
+    workflows: [CI]
+    types: [completed]
+    branches: [main]
 
 permissions:
   contents: read
@@ -13,12 +16,17 @@ concurrency:
 
 jobs:
   build:
+    # CI also runs for pull requests; only a push to main may be published.
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
     runs-on: ubuntu-latest
     permissions:
       contents: read
       pages: read
     steps:
       - uses: actions/checkout@v7
+        with:
+          # The commit CI tested, even if main has moved on since.
+          ref: ${{ github.event.workflow_run.head_sha }}
       - uses: actions/setup-node@v7
         with:
           node-version-file: .nvmrc

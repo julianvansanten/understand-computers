@@ -98,10 +98,10 @@ HTML for long, or students keep seeing an old version.
 ## GitHub Pages
 
 1. In the repository: Settings > Pages > Source: GitHub Actions.
-2. Actions > Deploy to GitHub Pages > Run workflow.
+2. Push to `main`. When all CI checks pass, that version is published. If a check fails, the site
+   keeps the previous version. To publish again without a push, re-run the CI workflow.
 
-The workflow sets `BASE_PATH` itself. It starts by hand only; a comment in it shows how to publish on
-every push.
+The workflow sets `BASE_PATH` itself.
 
 [Limits](https://docs.github.com/en/pages/getting-started-with-github-pages/github-pages-limits): the
 site at most 1 GB and about 100 GB traffic per month (this site is under 1 MB). Pages must not be

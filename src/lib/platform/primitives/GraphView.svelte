@@ -151,12 +151,12 @@
 		stroke-width: 2.5;
 	}
 	.name {
-		font-size: 18px;
+		font-size: calc(18px * var(--stage-text));
 		font-weight: 600;
 	}
 	.badge,
 	.edge-label {
-		font-size: 16px;
+		font-size: calc(16px * var(--stage-text));
 		paint-order: stroke;
 		stroke: var(--paper);
 		stroke-width: 6px;

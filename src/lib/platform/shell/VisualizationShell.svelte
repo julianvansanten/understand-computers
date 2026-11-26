@@ -116,6 +116,12 @@
 	}
 </script>
 
+{#snippet code(pseudocode: NonNullable<AnyVisualization['pseudocode']>)}
+	<Panel title={t('shell.pseudocode')}>
+		<Pseudocode lines={pseudocode(run.values)} current={player.frame?.codeLine} />
+	</Panel>
+{/snippet}
+
 <svelte:window {onkeydown} />
 <svelte:document
 	onfullscreenchange={() => {
@@ -144,8 +150,25 @@
 		</div>
 	</header>
 
-	<div class="main">
-		<RunView {run} {translate} bind:selection />
+	<!-- Pinned while scrolling the settings, unless pseudocode below it must be reachable. -->
+	<div class="main" class:sticky={!visualization.pseudocode || presenting}>
+		<div class="stage">
+			<RunView {run} {translate} bind:selection />
+			<!-- svelte-ignore a11y_no_noninteractive_element_interactions (Escape closes it, also from inside) -->
+			<details
+				class="legend"
+				onkeydown={(event) => {
+					if (event.key !== 'Escape') return;
+					event.currentTarget.open = false;
+					event.currentTarget.querySelector('summary')?.focus();
+				}}
+			>
+				<summary>{t('shell.legend')}</summary>
+				<div class="legend-content">
+					<Legend states={visualization.legend} {translate} />
+				</div>
+			</details>
+		</div>
 		{#if run.truncated}
 			<p class="notice" role="alert">{t('shell.truncated', { count: FRAME_LIMIT })}</p>
 		{/if}
@@ -156,6 +179,9 @@
 			</span>
 		</section>
 		<div class="controls"><Transport {run} /></div>
+		{#if visualization.pseudocode && !presenting}
+			{@render code(visualization.pseudocode)}
+		{/if}
 	</div>
 
 	{#if !panelHidden}
@@ -168,13 +194,8 @@
 					<RunView {run} {translate} part="Detail" bind:selection />
 				</Panel>
 			{/if}
-			{#if visualization.pseudocode}
-				<Panel title={t('shell.pseudocode')}>
-					<Pseudocode
-						lines={visualization.pseudocode(run.values)}
-						current={player.frame?.codeLine}
-					/>
-				</Panel>
+			{#if visualization.pseudocode && presenting}
+				{@render code(visualization.pseudocode)}
 			{/if}
 			<Panel title={t('shell.stats')}>
 				<dl>
@@ -185,9 +206,6 @@
 						</div>
 					{/each}
 				</dl>
-			</Panel>
-			<Panel title={t('shell.legend')}>
-				<Legend states={visualization.legend} {translate} />
 			</Panel>
 		</aside>
 	{/if}
@@ -234,9 +252,44 @@
 		gap: var(--space-3);
 		min-width: 0;
 	}
-	.main {
+	.sticky {
 		position: sticky;
 		top: var(--space-3);
+	}
+	.stage {
+		position: relative;
+	}
+	/* Over the paper's top-left corner, opaque so the drawing does not show through. */
+	.legend {
+		position: absolute;
+		top: var(--space-2);
+		left: var(--space-2);
+		z-index: 1;
+	}
+	summary {
+		display: inline-flex;
+		align-items: center;
+		min-height: var(--target);
+		padding: 0 var(--space-3);
+		border: 1.5px solid var(--line-strong);
+		border-radius: var(--radius);
+		background: var(--paper);
+		cursor: pointer;
+		list-style: none;
+	}
+	summary::-webkit-details-marker {
+		display: none;
+	}
+	summary:hover,
+	.legend[open] summary {
+		border-color: var(--pen);
+	}
+	.legend-content {
+		margin-top: var(--space-1);
+		padding: var(--space-3);
+		background: var(--paper);
+		border: 1.5px solid var(--line-strong);
+		border-radius: var(--radius);
 	}
 	.explanation {
 		display: flex;
@@ -289,7 +342,7 @@
 		.shell {
 			grid-template-columns: minmax(0, 1fr);
 		}
-		.main {
+		.sticky {
 			position: static;
 		}
 	}
